@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Golang WebApp</title>
+    <link rel="stylesheet" href="{{ .Static }}css/bootstrap.min.css" type="text/css">
+    <link rel="shortcut icon" href="{{ .Static }}img/favicon.ico">
+    <script type="text/javascript" src="/static/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/pwdval.js"></script>
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Golang WebApp</a>
+        </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="/">Home</a></li>
+            <li><a href="/register/">register</a></li>
+            <li><a href="/signin/">sign in</a></li>
+            <li><a href="/about/">about us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      {{ template "content" . }}
+    </div>
+  </body>
+</html>

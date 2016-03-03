@@ -1,0 +1,17 @@
+{{ define "content" }}
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+  </div>
+  <form action="/signin/" method="post">
+    <div class="form-group">
+			<label for="newUsername">Username</label>
+			<input type="text" name="username" id="newUsername" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newPassword">Password</label>
+			<input type="password" name="password" id="newPassword" class="form-control">
+		</div>
+    <input type="submit" value="SignIn">
+</form>
+  <p> A web form for member sign in.</p>
+{{ end }}

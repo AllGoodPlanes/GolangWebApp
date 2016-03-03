@@ -1,0 +1,41 @@
+{{ define "content" }}
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+  </div>
+  <form action="/register/" id="register" method="post" onsubmit="return checkForm(this);">
+    <div class="form-group">
+			<label for="newUsername">Username</label>
+			<input type="text" name="username" required placeholder="This field needs to be completed" id="newUsername" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newEmail">Email</label>
+			<input type="email" name="email" required placeholder="This field needs to be completed"id="newEmail" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newPassword">New Password</label>
+			<input type="password" name="password" required placeholder="Password must contain at least 6 characters, including UPPER/lowercase and numbers." id="newPassword" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newPassword">Re input New Password</label>
+			<input type="password" name="reinputpassword" required placeholder="The passwords must match."  id="reinputnewpassword" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newPostcode">Post/Zip Code</label>
+			<input type="text" name="postcode" id="newPostcode" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newCity">City</label>
+			<input type="text" name="city" id="newCity" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newCountry">Country</label>
+			<input type="text" name="country" id="newCountry" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="newMobileNo">Contact/MobileNo</label>
+			<input type="text" name="mobileno" id="newMobileNo" class="form-control">
+		</div>
+    <input type="submit" value="Register" class="btn btn-primary">
+</form>
+  <p>We have a HTML web form for registering new members.</p>
+{{ end }}
