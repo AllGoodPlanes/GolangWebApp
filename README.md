@@ -10,8 +10,9 @@ Upto & including stage 6:
 	Added e.mailed link as part of registration process  
 	Added some middleware     
 
-TODO:  
+TODO:
 
+Authorization at signin  
 e.mailed link for registration process time limited   
 Middleware   
 login e.mail reminder for forgotten password/username at signin  
