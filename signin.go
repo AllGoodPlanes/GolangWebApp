@@ -9,7 +9,6 @@ import (
 	"net/http"
 )
 
-var memberareaTemplate = template.Must(template.ParseGlob("templates/memberarea.html"))
 var errorloginTemplate = template.Must(template.New("display").Parse(errorloginTemplateHTML))
 
 func Signin(next http.Handler) http.Handler {
@@ -31,7 +30,8 @@ func Signin(next http.Handler) http.Handler {
 			err = db.QueryRow("SELECT Password FROM UserContact WHERE username = $1", username).Scan(&Password)
 
 			if err != nil {
-				log.Fatal(err)
+				errorloginTemplate.Execute(w, "Sorry... it looks like either your Password, or Username, is incorrect.")
+				return
 			}
 			db.QueryRow("SELECT Verified FROM UserContact WHERE username = $1", username).Scan(&Verified)
 
@@ -39,7 +39,10 @@ func Signin(next http.Handler) http.Handler {
 				match := bcrypt.CompareHashAndPassword([]byte(Password), password1)
 
 				if match == nil {
-
+					user = "OK"
+					pass = "match"
+					fmt.Println("method:", req.Method)
+					log.Println("Executing Auth")
 					next.ServeHTTP(w, req)
 				} else {
 					errorloginTemplate.Execute(w, "Sorry... it looks like either your Password, or Username, is incorrect.")

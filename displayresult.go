@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"gopkg.in/mgo.v2/bson"
 	"html/template"
+	"log"
 	"net/http"
 )
 
@@ -20,20 +22,16 @@ type Put struct {
 var displayresultTemplate = template.Must(template.ParseGlob("templates/displayresult.html"))
 var err error
 
-func lookup(w http.ResponseWriter, req *http.Request) {
-
-	memberareaTemplate.ExecuteTemplate(w, "memberarea.html", nil)
-
-}
-func display(w http.ResponseWriter, r *http.Request) {
+func Display(w http.ResponseWriter, req *http.Request) {
 	sessionCopy := mongoSession.Copy()
 	defer sessionCopy.Close()
 	collection := sessionCopy.DB(TestDatabase).C("AddressData")
 
 	var result AddressData
 
-	err = collection.Find(bson.M{"Name": r.FormValue("name")}).One(&result)
-
+	err = collection.Find(bson.M{"Name": req.FormValue("name")}).One(&result)
+	fmt.Println("method:", req.Method)
+	log.Println("Executing display")
 	if result.Email != "" {
 		context := Put{Result: "The e.mail address is:" + result.Email}
 		displayresultTemplate.ExecuteTemplate(w, "displayresult.html", context)

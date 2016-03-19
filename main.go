@@ -10,6 +10,9 @@ import (
 	"time"
 )
 
+var user string
+var pass string
+
 const STATIC_URL string = "/static/"
 const STATIC_ROOT string = "static/"
 
@@ -17,12 +20,16 @@ func main() {
 	fmt.Println("Listening...")
 	http.HandleFunc("/", Home)
 	http.HandleFunc("/about/", About)
-	lookup := http.HandlerFunc(lookup)
-	http.Handle("/signin/", Signin(lookup))
+
+	emaillookup := http.HandlerFunc(Lookup)
+	http.Handle("/signin/", Signin(Auth(emaillookup)))
+	showresult := http.HandlerFunc(Display)
+	http.Handle("/display/", Auth(showresult))
+	http.Handle("/lookup/", Auth(emaillookup))
+	membernews := http.HandlerFunc(News)
+	http.Handle("/membernews/", Auth(membernews))
 	http.HandleFunc("/register/", Register)
 	http.HandleFunc("/verify/", Verify)
-	http.HandleFunc("/display/", display)
-	http.HandleFunc("/lookup/", lookup)
 	http.HandleFunc(STATIC_URL, StaticHandler)
 	http.ListenAndServe(GetPort(), nil)
 
