@@ -1,5 +1,6 @@
-Learning each step towards building a Golang coded app template   
-Upto & including stage 6:   
+Learning each step towards building a Golang coded app template  
+Not using any 3rd party packages, e.g. routers, this so that all basics ca be learned     
+TO DATE:  
 	Added Home, About, Register & Signin pages  
 	Added Member area & a display result page  
 	Added password encryption - encrypted password saved to PostgresDb hosted by Heroku  
@@ -10,13 +11,12 @@ Upto & including stage 6:
 	Added e.mailed link as part of registration process  
 	Added some middleware  
 	That website pages look good on all types of device - making available on Heroku for testing   
+	Added session management cookies  
+	Added idle timeout after member signin  
 
 TODO:  
 
 e.mailed link for registration process time limited  
-idle timeout  
-session management, cookies 
-Middleware  
 log out
 login e.mail reminder for forgotten password/username at signin  
 short number code sent to mobile phone for extra security    
