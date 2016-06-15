@@ -14,9 +14,15 @@
                         <legend>Enter the search criteria here, e.g. "Maxine":</legend>
                         <p></p>
                         <label>Name</label>
-                       <form action="/display" method="post" accept-charset="utf-8" class="pure-form">
+                       <form action="/auth/display" method="post" accept-charset="utf-8" class="pure-form">
                               <input type="text" name="name" placeholder="name" />
-                              <input type="submit" value=".. and query database!" formaction="/display/"/>
+                              <input type="submit" value=".. and query database!" formaction="/auth/display/"/>
+                        </form>
+                        </p>
+                        <p></p>
+                        <label>Menu</label>
+                       <form action="/" method="post" accept-charset="utf-8" class="pure-form">
+                              <input type="submit" value="return to main menu" formaction="/"/>
                         </form>
                         </p>
               </fieldset>

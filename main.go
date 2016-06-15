@@ -17,21 +17,24 @@ const STATIC_URL string = "/static/"
 const STATIC_ROOT string = "static/"
 
 func main() {
-	fmt.Println("Listening...")
-	http.HandleFunc("/", Home)
-	http.HandleFunc("/about/", About)
 
-	emaillookup := http.HandlerFunc(Lookup)
-	http.Handle("/signin/", Signin(Auth(emaillookup)))
+	mux := http.NewServeMux()
+
+	fmt.Println("Listening...")
+	mux.HandleFunc("/", Home)
+	mux.HandleFunc("/about/", About)
+
+	loggedin := http.HandlerFunc(Signedin)
+	mux.Handle("/signin/", Signin(loggedin))
 	showresult := http.HandlerFunc(Display)
-	http.Handle("/display/", Auth(showresult))
-	http.Handle("/lookup/", Auth(emaillookup))
+	mux.Handle("/auth/display/", Auth(showresult))
+	emaillookup := http.HandlerFunc(Lookup)
+	mux.Handle("/auth/lookup/", Auth(emaillookup))
 	membernews := http.HandlerFunc(News)
-	http.Handle("/membernews/", Auth(membernews))
-	http.HandleFunc("/register/", Register)
-	http.HandleFunc("/verify/", Verify)
-	http.HandleFunc(STATIC_URL, StaticHandler)
-	http.ListenAndServe(GetPort(), nil)
+	mux.Handle("/auth/membernews/", Auth(membernews))
+	mux.HandleFunc("/register/", Register)
+	mux.HandleFunc(STATIC_URL, StaticHandler)
+	http.ListenAndServe(GetPort(), mux)
 
 }
 
@@ -49,6 +52,11 @@ func Home(w http.ResponseWriter, req *http.Request) {
 func About(w http.ResponseWriter, req *http.Request) {
 	context := Context{Title: "About us"}
 	render(w, "about", context)
+}
+
+func Signedin(w http.ResponseWriter, req *http.Request) {
+	context := Context{Title: "Welcome member"}
+	render(w, "signedin", context)
 }
 
 func render(w http.ResponseWriter, tmpl string, context Context) {
