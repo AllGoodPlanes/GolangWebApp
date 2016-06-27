@@ -24,4 +24,4 @@ Encrypt website HTTPS, SSL  (Heroku does this)
 Write tests  
 Dockerize  
 
-Current state can be seen on: http://blanktemplateapp.herokuapp.com
+Current state can be seen on: http://golangwebapp.herokuapp.com
