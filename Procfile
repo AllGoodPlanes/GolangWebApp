@@ -1,1 +1,1 @@
-web: App2heroku
+web: GolangWebApp
