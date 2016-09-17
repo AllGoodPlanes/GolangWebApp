@@ -33,6 +33,7 @@ func main() {
 	membernews := http.HandlerFunc(News)
 	mux.Handle("/auth/membernews/", Auth(membernews))
 	mux.HandleFunc("/register/", Register)
+	mux.HandleFunc("/verify/", Verify)
 	mux.HandleFunc(STATIC_URL, StaticHandler)
 	http.ListenAndServe(GetPort(), mux)
 

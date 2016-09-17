@@ -9,7 +9,7 @@ import (
 func emaillnk(e, u, h string) {
 	// Set up authentication information.
 	auth := smtp.PlainAuth("", "ricpelong@hotmail.co.uk", "2shoes2loose", "smtp.live.com")
-	baseUrl := "http://blanktemplateapp.herokuapp.com/verify/?"
+	baseUrl := "http://golangwebapp.herokuapp.com/verify/?"
 	params := url.Values{}
 	params.Add("token", h)
 	params.Add("email", e)

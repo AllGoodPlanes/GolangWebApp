@@ -1,0 +1,89 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Ncf0ItwKAuTF5eNkGW+Pk78pwzM=",
+			"comment": "go1.0-cutoff-60-gffe986a",
+			"path": "github.com/lib/pq",
+			"revision": "ffe986aba3e6cfcded8b06615965941408891ef0"
+		},
+		{
+			"checksumSHA1": "jaCQF1par6Jl8g+V2Cgp0n/0wSc=",
+			"comment": "go1.0-cutoff-60-gffe986a",
+			"path": "github.com/lib/pq/hstore",
+			"revision": "ffe986aba3e6cfcded8b06615965941408891ef0"
+		},
+		{
+			"checksumSHA1": "X6qUZLq/pJkMn4G8DbBZnJ6fV6A=",
+			"comment": "go1.0-cutoff-60-gffe986a",
+			"path": "github.com/lib/pq/listen_example",
+			"revision": "ffe986aba3e6cfcded8b06615965941408891ef0"
+		},
+		{
+			"checksumSHA1": "xppHi82MLqVx1eyQmbhTesAEjx8=",
+			"comment": "go1.0-cutoff-60-gffe986a",
+			"path": "github.com/lib/pq/oid",
+			"revision": "ffe986aba3e6cfcded8b06615965941408891ef0"
+		},
+		{
+			"checksumSHA1": "vE43s37+4CJ2CDU6TlOUOYE0K9c=",
+			"path": "golang.org/x/crypto/bcrypt",
+			"revision": "575fdbe86e5dd89229707ebec0575ce7d088a4a6"
+		},
+		{
+			"checksumSHA1": "udD2DzUPFZbMVXP0VNADhef4zKk=",
+			"path": "golang.org/x/crypto/blowfish",
+			"revision": "575fdbe86e5dd89229707ebec0575ce7d088a4a6"
+		},
+		{
+			"checksumSHA1": "xunNOgG8P6Xh4SM+LPQ1zMDXa8Q=",
+			"comment": "v1.7.1",
+			"path": "gopkg.in/gorp.v1",
+			"revision": "c87af80f3cc5036b55b83d77171e156791085e2e"
+		},
+		{
+			"checksumSHA1": "KaJRC3H4gf9aNsQ66KJ7Tycb+94=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "K/lQInTR+txzqW/I5/rDzEXDndw=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/bson",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "b4BuYjjuvJ1vuhQ6TYc8c/eXMP8=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/dbtest",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "CkCDTsyN2Lbj1cL8+oaYKoPpI9w=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/internal/sasl",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "+1WDRPaOphSCmRMxVPIPBV4aubc=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/internal/scram",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "Cjhi/Yzb1bxE0Bs/eYdwq951hgw=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/testserver",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		},
+		{
+			"checksumSHA1": "D4ujuxhcyvkJfG28orCSrrelvhs=",
+			"comment": "r2015.10.05-1-g4d04138",
+			"path": "gopkg.in/mgo.v2/txn",
+			"revision": "4d04138ffef2791c479c0c8bbffc30b34081b8d9"
+		}
+	],
+	"rootPath": "github.com/allgoodplanes/GolangWebApp"
+}
