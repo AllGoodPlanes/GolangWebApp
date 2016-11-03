@@ -12,7 +12,7 @@ func emaillnk(e, u, h string) {
 	fmt.Println(e)
 	fmt.Println(u)
 	fmt.Println(h)
-	auth := smtp.PlainAuth("","richardlong@gocloudcoding.com", "2N!tefight", "smtp.office.com")
+	auth := smtp.PlainAuth("","richardlong@gocloudcoding.com", "2N!tefight", "smtp.office365.com")
 	baseUrl := "http://golangwebapp.herokuapp.com/verify/?"
 	params := url.Values{}
 	params.Add("token", h)
@@ -27,7 +27,7 @@ func emaillnk(e, u, h string) {
 		"\r\n" +
 		"Click on link to complete App registration.\r\n" +
 		finalUrl)
-	err := smtp.SendMail("smtp.office.com:587", auth, "richardlong@gocloudcoding.com", to, msg)
+	err := smtp.SendMail("smtp.office365.com:587", auth, "richardlong@gocloudcoding.com", to, msg)
 
 	if err != nil {
 		log.Fatal(err)
