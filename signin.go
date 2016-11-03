@@ -79,7 +79,7 @@ func Signin(next http.Handler) http.Handler {
 						Expiry: exp,
 					}
 
-					cookie := http.Cookie{Name: "GoWebAppCookie", Value: session.ID, Domain: "golangwebapp.herokuapp.com", Path: "/auth/", Expires: session.Expiry}
+					cookie := http.Cookie{Name: "GoWebAppCookie", Value: session.ID, Domain: "127.0.0.1:8080", Path: "/auth/", Expires: session.Expiry}
 					http.SetCookie(w, &cookie)
 
 					fmt.Println("method:", req.Method)

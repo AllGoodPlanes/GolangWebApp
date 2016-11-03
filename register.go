@@ -25,6 +25,7 @@ type UserContact struct {
 
 var emailregnotificationTemplate = template.Must(template.ParseGlob("templates/regnotification.html"))
 var registererrorsTemplate = template.Must(template.ParseGlob("templates/registererrors.html"))
+var memberareaTemplate = template.Must(template.ParseGlob("templates/memberarea.html"))
 
 func Verify(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("GET params:", req.URL.Query())
@@ -113,7 +114,6 @@ func Register(w http.ResponseWriter, req *http.Request) {
 		} else if !re.MatchString(username) {
 			registererrorsTemplate.Execute(w, "username must contain only alpha numeric & underscore characters.")
 		} else if Username == username {
-			registererrorsTemplate.Execute(w, "username already exists.")
 		} else if email == "" {
 			registererrorsTemplate.Execute(w, "You must include a valid e.mail address.")
 		} else if Email == email {
@@ -126,9 +126,10 @@ func Register(w http.ResponseWriter, req *http.Request) {
 			registererrorsTemplate.Execute(w, "The re-input password doesn't match.")
 		} else {
 			emaillnk(email, username, string(hashedemail))
+
+			emailregnotificationTemplate.ExecuteTemplate(w, "regnotification.html", nil)
 			c1 := &UserContact{0, verified, username, email, string(hashedPassword), country, city, postCode, mobile}
 			dbmap.Insert(c1)
-			emailregnotificationTemplate.ExecuteTemplate(w, "regnotification.html", nil)
 		}
 		fmt.Println("GET params:", req.URL.Query())
 		token := req.URL.Query()["token"]
