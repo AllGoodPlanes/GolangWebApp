@@ -25,7 +25,7 @@ type UserContact struct {
 
 var emailregnotificationTemplate = template.Must(template.ParseGlob("templates/regnotification.html"))
 var registererrorsTemplate = template.Must(template.ParseGlob("templates/registererrors.html"))
-var memberareaTemplate = template.Must(template.ParseGlob("templates/memberarea.html"))
+var memberareaTemplate = template.Must(template.ParseGlob("templates/membernews.html"))
 
 func Verify(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("GET params:", req.URL.Query())
