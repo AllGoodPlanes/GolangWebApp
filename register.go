@@ -42,7 +42,7 @@ func Verify(w http.ResponseWriter, req *http.Request) {
 
 		if match == nil {
 			db.QueryRow("UPDATE UserContact SET Verified = 'Yes' WHERE email = $1 RETURNING Verified", email).Scan(&Verified)
-			memberareaTemplate.ExecuteTemplate(w, "memberarea.html", nil)
+			memberareaTemplate.ExecuteTemplate(w, "membernews.html", nil)
 		} else {
 			errorloginTemplate.Execute(w, "Sorry... it looks like something went wrong. Try the e.mail link again., then reregistering if there are still problems.")
 		}
