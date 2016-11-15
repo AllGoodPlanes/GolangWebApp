@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+	"compress/gzip"
+	"strings"
 )
 
 var user string
@@ -21,23 +23,31 @@ func main() {
 	mux := http.NewServeMux()
 
 	fmt.Println("Listening...")
-	mux.HandleFunc("/", Home)
-	mux.HandleFunc("/about/", About)
+	mux.HandleFunc("/", makeGzipHandler(Home))
+	mux.HandleFunc("/about/", makeGzipHandler(About))
 
-	loggedin := http.HandlerFunc(Signedin)
+	loggedin := makeGzipHandler(http.HandlerFunc(Signedin))
 	mux.Handle("/signin/", Signin(loggedin))
-	membernews := http.HandlerFunc(News)
+	membernews := makeGzipHandler(http.HandlerFunc(News))
 	mux.Handle("/auth/membernews/", Auth(membernews))
-	suggestions := http.HandlerFunc(Display)
+	suggestions := makeGzipHandler(http.HandlerFunc(Display))
 	mux.Handle("/auth/suggestions/", Auth(suggestions))
-	addsuggestions := http.HandlerFunc(Addcomment)
+	addsuggestions := makeGzipHandler(http.HandlerFunc(Addcomment))
 	mux.Handle("/auth/addcomment/", Auth(addsuggestions))
-	mux.HandleFunc("/register/", Register)
-	mux.HandleFunc("/verify/", Verify)
-	mux.HandleFunc(STATIC_URL, StaticHandler)
+	mux.HandleFunc("/register/", makeGzipHandler(Register))
+	mux.HandleFunc("/verify/", makeGzipHandler(Verify))
+	mux.HandleFunc(STATIC_URL, makeGzipHandler(StaticHandler))
 	http.ListenAndServe(GetPort(), mux)
 
 }
+
+type gzipResponseWriter struct {
+	io.Writer
+	http.ResponseWriter
+}
+
+
+
 
 type Context struct {
 	Title  string
@@ -45,17 +55,39 @@ type Context struct {
 	User   string
 }
 
+func (w gzipResponseWriter) Write(b []byte) (int, error){
+	return w.Writer.Write(b)
+}
+
+func makeGzipHandler(fn http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r*http.Request) {
+		if !strings.Contains(r.Header.Get("Accept-Encoding"),"gzip") {
+			fn(w, r)
+			return
+		}
+		w.Header().Set("Content-Encoding", "gzip")
+		gz := gzip.NewWriter(w)
+		defer gz.Close()
+		gzr:=gzipResponseWriter{Writer:gz, ResponseWriter: w}
+		fn(gzr, r)
+	}
+}
+
+
 func Home(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Welcome!"}
 	render(w, "home", context)
 }
 
 func About(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "About us"}
 	render(w, "about", context)
 }
 
 func Signedin(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Welcome member"}
 	render(w, "signedin", context)
 }
@@ -75,6 +107,7 @@ func render(w http.ResponseWriter, tmpl string, context Context) {
 }
 
 func StaticHandler(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type","text/css")
 	static_file := req.URL.Path[len(STATIC_URL):]
 	if len(static_file) != 0 {
 		f, err := http.Dir(STATIC_ROOT).Open(static_file)

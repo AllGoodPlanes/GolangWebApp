@@ -28,6 +28,7 @@ var registererrorsTemplate = template.Must(template.ParseGlob("templates/registe
 var memberareaTemplate = template.Must(template.ParseGlob("templates/membernews.html"))
 
 func Verify(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type","text/html")
 	fmt.Println("GET params:", req.URL.Query())
 	email := req.URL.Query().Get("email")
 	token := req.URL.Query().Get("token")
@@ -50,6 +51,7 @@ func Verify(w http.ResponseWriter, req *http.Request) {
 }
 
 func Register(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type","text/html")
 
 	context := Context{Title: "Register new member"}
 	fmt.Println("method:", req.Method) //get request method

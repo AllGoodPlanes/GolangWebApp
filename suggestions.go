@@ -23,6 +23,7 @@ var displaysuggestionsTemplate = template.Must(template.ParseGlob("templates/sug
 var err error
 
 func Addcomment(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
 	sessionCopy:= mongoSession.Copy()
 
 	cookie, err := req.Cookie("GoWebAppCookie")
@@ -41,7 +42,8 @@ func Addcomment(w http.ResponseWriter, req *http.Request) {
 	err =collection2.Insert(&Suggestions{Comment:suggestion,Username: name})
 }
 
-func Display(w http.ResponseWriter, req *http.Request){
+func Display(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
 	displaysuggestionsTemplate.ExecuteTemplate(w, "suggestions.html", nil)
 }
 
