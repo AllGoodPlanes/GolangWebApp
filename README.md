@@ -7,8 +7,7 @@ Added Member area
 Added password encryption - encrypted password saved to PostgresDb hosted by Heroku  
 Added dbconnect file with global variable & init for opening Postgres & Mongo databases  
 Added browser-side javascript registration input verification  
-Added Server-side (Golang) registration input verification - including check for duplicate e.mails & usernames  
-  -  all essential info' requested has been input, all requested elements of the password included - numbers, length etc
+Added Server-side (Golang) registration input verification - including check for duplicate e.mails & usernames, i.e. all essential info' requested has been input, all requested elements of the password included - numbers, length etc
 Added e.mailed link as part of registration process  
 Added authorisation 
 That website pages look good on all types of device - making available on Heroku for testing  
