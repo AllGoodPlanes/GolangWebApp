@@ -13,17 +13,22 @@ Added e.mailed link as part of registration process
 Added authorisation
 That website pages look good on all types of device - making available on Heroku for testing
 Added session management cookies
-Added idle timeout after member signin
+Added signin time limited
 Encrypt website HTTPS, SSL (Heroku does this)
+Added gzip site compression
 
 TODO:
 
+browser caching issues - as per vary.com/pagespeed test
+Render blocking CSS/JS needs sorting - as per vary.com/pagespeed test
 e.mailed link for registration process time limited
-log out
-login e.mail reminder for forgotten password/username at signin
+Log out
+Idle timeout
+Login e.mail reminder for forgotten password/username at signin
 Member suggestion page with ratings
-Upgrade to paid Heroku service to include SSL on email messafging
+Upgrade to paid Heroku service to include SSL on email messaging
+Outlook365 tls cert
 Write tests
 Dockerize
 
-Current state can be seen on: https://golangwebapp.herokuapp.com
+Current state can be seen on: gocloudcoding.com redirected to  https://golangwebapp.herokuapp.com
