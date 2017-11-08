@@ -14,7 +14,7 @@ func emaillnk(e, u, h string) {
 	fmt.Println(h)
 
 	//using our  outlook365.com register@gocloudcoding.com address requires SSL which requires a paid for service on Herokuto - to be added later.
-	auth := smtp.PlainAuth("","gowebapp@outlook.com", "F!ndSomeSnow", "smtp.live.com")
+	auth := smtp.PlainAuth("","ricpelong@hotmail.co.uk", "2shoes2loose1", "smtp.live.com")
 	baseUrl := "http://golangwebapp.herokuapp.com/verify/?"
 	params := url.Values{}
 	params.Add("token", h)
@@ -29,7 +29,7 @@ func emaillnk(e, u, h string) {
 		"\r\n" +
 		"Click on link to complete App registration.\r\n" +
 		finalUrl)
-	err := smtp.SendMail("smtp.live.com:587", auth, "gowebapp@outlook.com", to, msg)
+	err := smtp.SendMail("smtp.live.com:587", auth, "ricpelong@hotmail.co.uk", to, msg)
 
 	if err != nil {
 		log.Fatal(err)
