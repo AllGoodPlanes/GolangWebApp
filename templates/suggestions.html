@@ -1,26 +1,20 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Being developed - a Suggestions page</title>
-    <link rel="stylesheet" href="{{ .Static }}css/bootstrap.min.css" type="text/css">
-    <link rel="shortcut icon" href="{{ .Static }}img/favicon.ico">
-  </head>
-<body>
-    <h1>Coming soon: a feedback page where members can suggest improvements and ideas for development </h1>
-    <h2>What do you think?</h2>
+{{define "content"}}
+<div class="page-header">
+	<h1>Suggestions</h1>
+</div>
     <form>
           <fieldset>
-                    <legend>Enter your comment here:</legend>
+                    <legend>Add your suggestion, or upvote a comment</legend>
                     <p></p>
-                    <label>Suggestion</label>
+                    <label></label>
                    <form action="/auth/addcomment" method="post" accept-charset="utf-8" class="pure-form">
                           <input type="text" name="suggestion" placeholder="suggestion" />
-                          <input type="submit" value=".. and add member suggestion" formaction="/auth/addcomment/"/>
-                    </form>
-                    </p>
+                          <input type="submit" value="Post" formaction="/auth/addcomment/" />
           </fieldset>
     </form>
-</body>
-</html>
+
+    <form>
+	    {{template "form".}}
+    </form>
+    <p></p>
+{{ end }}

@@ -1,0 +1,23 @@
+{{define "form"}}
+<fieldset>
+
+
+<legend></legend>
+	<p>
+	<p><b>{{ range.}}
+		<p style="colorDarkSlateGrey;"> {{.Name}}</p>
+		<p style="colorSlateGrey; font-size:14px"> {{._id}}
+		<p>
+		<form action="/auth/votes" method="post">
+			<button  name="vote" type="submit" value="{{._id}}" class="btn btn-info btn-sm" formaction="/auth/votes/" >
+
+		<span class="glyphicon glyphicon-thumbs-up"></span>
+
+		<a href="#"><span class="badge">{{.Count}}</span></a>
+		</button>
+		</form></p>
+		<p style="color:Black; font-size:11px;">Added: {{.Date}}
+		{{ end }}</b><p>
+	</p>
+</fieldset>
+{{end}}

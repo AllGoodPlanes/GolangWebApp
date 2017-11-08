@@ -7,7 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+//	"time"
 	"compress/gzip"
 	"strings"
 )
@@ -30,13 +30,17 @@ func main() {
 	mux.Handle("/signin/", Signin(loggedin))
 	membernews := makeGzipHandler(http.HandlerFunc(News))
 	mux.Handle("/auth/membernews/", Auth(membernews))
-	suggestions := makeGzipHandler(http.HandlerFunc(Display))
+	suggestions := makeGzipHandler(http.HandlerFunc(Comments))
 	mux.Handle("/auth/suggestions/", Auth(suggestions))
 	addsuggestions := makeGzipHandler(http.HandlerFunc(Addcomment))
 	mux.Handle("/auth/addcomment/", Auth(addsuggestions))
+	vote := makeGzipHandler(http.HandlerFunc(V))
+	mux.Handle("/auth/votes/",Auth(vote))
 	mux.HandleFunc("/register/", makeGzipHandler(Register))
 	mux.HandleFunc("/verify/", makeGzipHandler(Verify))
-	mux.HandleFunc(STATIC_URL, makeGzipHandler(StaticHandler))
+	//mux.HandleFunc(STATIC_URL, makeGzipHandler(StaticHandler))
+	fs:= http.FileServer(http.Dir("static"))
+	mux.Handle("/static/",http.StripPrefix("/static/", fs))
 	http.ListenAndServe(GetPort(), mux)
 
 }
@@ -53,6 +57,8 @@ type Context struct {
 	Title  string
 	Static string
 	User   string
+
+
 }
 
 func (w gzipResponseWriter) Write(b []byte) (int, error){
@@ -83,13 +89,13 @@ func Home(w http.ResponseWriter, req *http.Request) {
 func About(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "About us"}
-	render(w, "about", context)
+	render(w, "about",  context)
 }
 
 func Signedin(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Welcome member"}
-	render(w, "signedin", context)
+	render(w, "signedin", context, )
 }
 
 func render(w http.ResponseWriter, tmpl string, context Context) {
@@ -100,25 +106,26 @@ func render(w http.ResponseWriter, tmpl string, context Context) {
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
-	err = t.Execute(w, context)
+	//err = t.Execute(w, context )
+	err= t.ExecuteTemplate(w, "base", context)
 	if err != nil {
 		log.Print("template executing error: ", err)
 	}
 }
 
-func StaticHandler(w http.ResponseWriter, req *http.Request) {
-	w.Header().Set("Content-Type","text/css")
-	static_file := req.URL.Path[len(STATIC_URL):]
-	if len(static_file) != 0 {
-		f, err := http.Dir(STATIC_ROOT).Open(static_file)
-		if err == nil {
-			content := io.ReadSeeker(f)
-			http.ServeContent(w, req, static_file, time.Now(), content)
-			return
-		}
-	}
-	http.NotFound(w, req)
-}
+//func StaticHandler(w http.ResponseWriter, req *http.Request) {
+//	w.Header().Set("Content-Type","text/css")
+//	static_file := req.URL.Path[len(STATIC_URL):]
+//	if len(static_file) != 0 {
+//		f, err := http.Dir(STATIC_ROOT).Open(static_file)
+//		if err == nil {
+//			content := io.ReadSeeker(f)
+//			http.ServeContent(w, req, static_file, time.Now(), content)
+//			return
+//		}
+//	}
+//	http.NotFound(w, req)
+//}
 
 func GetPort() string {
 	port := os.Getenv("PORT")
