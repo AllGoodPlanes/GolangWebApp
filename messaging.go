@@ -5,7 +5,12 @@ import (
 	"net/smtp"
 	"net/url"
 	"fmt"
+	"errors"
 )
+
+type loginAuth struct{
+username, password string
+}
 
 func emaillnk(e, u, h string) {
 	// Set up authentication information.i
@@ -14,7 +19,7 @@ func emaillnk(e, u, h string) {
 	fmt.Println(h)
 
 	//using our  outlook365.com register@gocloudcoding.com address requires SSL which requires a paid for service on Herokuto - to be added later.
-	auth := smtp.PlainAuth("","ricpelong@hotmail.co.uk", "2shoes2loose1", "smtp.live.com")
+	auth := LoginAuth("ricpelong@hotmail.co.uk", "2shoes2loose1")
 	baseUrl := "http://golangwebapp.herokuapp.com/verify/?"
 	params := url.Values{}
 	params.Add("token", h)
@@ -35,3 +40,34 @@ func emaillnk(e, u, h string) {
 		log.Fatal(err)
 	}
 }
+
+//from: github.com/andelf/5118732
+
+func LoginAuth(username,password string) smtp.Auth{
+	return &loginAuth{username, password}
+}
+
+func (a *loginAuth) Start(server*smtp.ServerInfo)(string, []byte, error){
+	return"LOGIN", []byte{},nil
+}
+
+
+func (a *loginAuth) Next(fromServer []byte, more bool)([]byte, error){
+	if more{
+		switch string(fromServer){
+		case "Username:":
+			return []byte(a.username), nil
+		case "Password:":
+			return []byte(a.password), nil
+		default:
+			return nil, errors.New("Unknown fromServer")
+}
+
+
+}
+return nil, nil
+
+}
+
+
+
