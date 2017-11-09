@@ -42,6 +42,7 @@ func emaillnk(e, u, h string) {
 }
 
 //from: github.com/andelf/5118732
+//Outlook nolonger supports Auth Plain,the method in smtp. Andelf has already produced a Auth Login version, so it was easier touse that.
 
 func LoginAuth(username,password string) smtp.Auth{
 	return &loginAuth{username, password}
