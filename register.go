@@ -116,6 +116,7 @@ func Register(w http.ResponseWriter, req *http.Request) {
 		} else if !re.MatchString(username) {
 			registererrorsTemplate.Execute(w, "username must contain only alpha numeric & underscore characters.")
 		} else if Username == username {
+			registererrorsTemplate.Execute(w, "Sorry, that username is already in use.")
 		} else if email == "" {
 			registererrorsTemplate.Execute(w, "You must include a valid e.mail address.")
 		} else if Email == email {
