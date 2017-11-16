@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	_ "github.com/lib/pq"
+	"gopkg.in/mgo.v2/bson"
 	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"log"
@@ -41,6 +42,36 @@ type Cookie struct {
 }
 
 var errorloginTemplate = template.Must(template.New("display").Parse(errorloginTemplateHTML))
+
+
+func Signout(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Content-Type", "text/html")
+	context := Context{Title: "You've logged out successfully"}
+	render(w, "signout", context)
+
+	cookie, err := req.Cookie("GoWebAppCookie")
+	if err != nil {
+		fmt.Println("error")
+		http.Redirect(w,req, "/signin/", http.StatusFound)
+	}
+	sessionCopy := mongoSession.Copy()
+	collection := sessionCopy.DB(TestDatabase).C("GolangWebAppSession")
+	defer sessionCopy.Close()
+
+	fmt.Println(cookie.Value)
+
+
+	Loggedin := bson.M{"ID":cookie.Value}
+	IDamended := bson.M{"$set":bson.M{"ID":"xxx"}}
+
+	collection.Update(Loggedin, IDamended)
+
+
+}
+
+
+
+
 
 func Signin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {

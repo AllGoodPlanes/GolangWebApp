@@ -30,6 +30,8 @@ func main() {
 	mux.Handle("/signin/", Signin(loggedin))
 	membernews := makeGzipHandler(http.HandlerFunc(News))
 	mux.Handle("/auth/membernews/", Auth(membernews))
+	loggedout:= makeGzipHandler(http.HandlerFunc(Signout))
+	mux.Handle("/auth/signout/", Auth(loggedout))
 	suggestions := makeGzipHandler(http.HandlerFunc(Comments))
 	mux.Handle("/auth/suggestions/", Auth(suggestions))
 	addsuggestions := makeGzipHandler(http.HandlerFunc(Addcomment))
