@@ -1,4 +1,4 @@
-package main
+pangckage main
 
 import (
 	"fmt"
@@ -9,18 +9,22 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"strings"
+	"path/filepath"
 )
 
 type Session struct {
 	ID     string
 	UserID string
-	Expiry time.Time
+	Expiry string
 }
 
 type GolangWebAppSession struct {
 	Username string    `bson:"Username"`
 	ID       string    `bson:"ID"`
-	Expires  time.Time `bson:"Expires"`
+	//Expires  time.Time `bson:"Expires"`
+	Expires string `bson:"Expires"`
+
 }
 
 type Cookie struct {
@@ -28,7 +32,8 @@ type Cookie struct {
 	Value      string
 	Path       string
 	Domain     string
-	Expires    time.Time
+//	Expires    time.Time
+	Expires string
 	RawExpires string
 
 	// MaxAge=0 means no 'Max-Age' attribute specified.
@@ -43,6 +48,77 @@ type Cookie struct {
 
 var errorloginTemplate = template.Must(template.New("display").Parse(errorloginTemplateHTML))
 
+func Signedin(w http.ResponseWriter, req *http.Request) {
+	w.Header().Set("Context-Type", "text/html")
+
+	url := req.URL.String()
+	s := strings.Split(url,"/")
+	ip, port := s[1], s[2]
+	fmt.Println(ip)
+	fmt.Println(port)
+
+	sessionCopy:= mongoSession.Copy()
+	collection := sessionCopy.DB(TestDatabase).C("GolangWebAppSession")
+	defer sessionCopy.Close()
+
+	X := time.Now()
+	NTm1 := X.Add(3 * time.Minute)
+	NTm := NTm1.Format("2006-01-02 15:04")
+
+	pipe:= collection.Pipe([]bson.M{
+	bson.M{"$match":bson.M{"Username":port}},
+	bson.M{"$group":bson.M{"_id":"$_id", "Expires":bson.M{"$push":"$Expires"}}},
+	bson.M{"$match":bson.M{"Expires":bson.M{"$ne":NTm}}},
+	bson.M{"$project":bson.M{"_id":1,"Expires":1}},
+	bson.M{"$sort":bson.M{"Expires":1}},
+	bson.M{"$group":bson.M{"_id":0, "Expires":bson.M{"$last":"$Expires"}}},
+	bson.M{"$project":bson.M{"Expires":1}},
+	},
+)
+
+	var err2 error
+	resp :=[]bson.M{}
+	err2 = pipe.All(&resp)
+
+	if err2 !=nil{
+		panic(err2)
+	}
+
+	a := fmt.Sprintf("%s",resp)
+	b:= strings.Replace(a, "[map[_id:%!s(int=0) Expires:[","", -1)
+	c := strings.Replace(b, "]]]", "", -1)
+	d := fmt.Sprintf("%s", c)
+
+	var f string
+	if d == "[]"{
+		f = "new member"
+	}else{
+		f = d
+	}
+
+	e := fmt.Sprintf("%s", port)
+
+	type Z struct{
+	Name string
+	Expires string
+	}
+
+	var x =[]Z{{e,f}}
+	lp := filepath.Join("templates", "base.html")
+	fp := filepath.Join("templates", "signedin.html")
+
+	t, err := template.ParseFiles(lp, fp)
+	if err!=nil{
+		log.Fatalln(err)
+	}
+
+
+	err=t.ExecuteTemplate(w, "base", x)
+	if err!= nil {
+		log.Fatalln(err)
+
+	}
+}
 
 func Signout(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
@@ -68,10 +144,6 @@ func Signout(w http.ResponseWriter, req *http.Request) {
 
 
 }
-
-
-
-
 
 func Signin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, req *http.Request) {
@@ -104,13 +176,15 @@ func Signin(next http.Handler) http.Handler {
 				if match == nil {
 
 					log.Println("Executing cookie & session")
-					exp := time.Now().Add(30 * time.Minute)
+					exp1 := time.Now().Add(3 * time.Minute)
+					exp:= exp1.Format("2006-01-02 15:04")
+
 					session := &Session{
 						ID:     sessID(20),
 						Expiry: exp,
 					}
 
-					cookie := http.Cookie{Name: "GoWebAppCookie", Value: session.ID, Domain: "127.0.0.1:8080", Path: "/auth/", Expires: session.Expiry}
+					cookie := http.Cookie{Name: "GoWebAppCookie", Value: session.ID, Domain: "golangwebapp.herokuapp.com", Path: "/auth/", Expires: exp1}
 					http.SetCookie(w, &cookie)
 
 					fmt.Println("method:", req.Method)
@@ -127,8 +201,10 @@ func Signin(next http.Handler) http.Handler {
 					}
 
 					log.Println("Executing Auth")
-					next.ServeHTTP(w, req)
 
+				http.Redirect(w, req, "/signedin/"+username, http.StatusFound)
+
+				return
 				} else {
 					errorloginTemplate.Execute(w, "Sorry... it looks like either your Password, or Username, is incorrect.")
 				}
@@ -162,3 +238,5 @@ legend {color: blue}
         </form>
     </body>
 </html>`
+
+

@@ -1,7 +1,11 @@
 {{ define "content" }}
   <div class="page-header">
-    <h1>{{ .Title }}</h1>
+    <h1>Logged in</h1>
   </div>
-  <p>Welcome member</p>
-  
+  <p><b>{{range.}}
+	  <p style="colorDarkSlateGrey;"><Strong><h3>Hello: {{.Name}}</h3></strong>
+	  <p style="colorDarkSlateGrey;">Last seen: {{.Expires}}
+	  {{end}}</b><p>
+  </p>
 {{ end }}
+
