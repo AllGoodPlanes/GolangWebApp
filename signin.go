@@ -1,4 +1,4 @@
-pangckage main
+package main
 
 import (
 	"fmt"
