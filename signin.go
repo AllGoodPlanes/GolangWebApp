@@ -32,7 +32,6 @@ type Cookie struct {
 	Value      string
 	Path       string
 	Domain     string
-//	Expires    time.Time
 	Expires string
 	RawExpires string
 
