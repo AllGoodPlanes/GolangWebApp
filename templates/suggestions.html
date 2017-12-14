@@ -1,6 +1,13 @@
 {{define "content"}}
 <div class="page-header">
 	<h1>Suggestions</h1>
+
+  <form action="/signout" method="post">
+	  <button name="signout" type="submit" class="btn btn-info btn-sm" formaction="/auth/signout/">
+		  <a href="#"><span class="badge"></span>
+	  <span class="glyphicon glyphicon-log-out"></span>Log out
+  </a>
+  </form>
 </div>
     <form>
           <fieldset>

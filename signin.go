@@ -175,7 +175,7 @@ func Signin(next http.Handler) http.Handler {
 				if match == nil {
 
 					log.Println("Executing cookie & session")
-					exp1 := time.Now().Add(3 * time.Minute)
+					exp1 := time.Now().Add(30 * time.Minute)
 					exp:= exp1.Format("2006-01-02 15:04")
 
 					session := &Session{
