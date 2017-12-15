@@ -61,7 +61,7 @@ func Signedin(w http.ResponseWriter, req *http.Request) {
 	defer sessionCopy.Close()
 
 	X := time.Now()
-	NTm1 := X.Add(3 * time.Minute)
+	NTm1 := X.Add(30 * time.Minute)
 	NTm := NTm1.Format("2006-01-02 15:04")
 
 	pipe:= collection.Pipe([]bson.M{
