@@ -1,0 +1,26 @@
+{{ define "content" }}
+  <div class="page-header">
+    <h1>{{ .Title }}</h1>
+  </div>
+  <form action="/feedback/" id="feedback" method="post" onsubmit="return checkForm(this);">
+
+    <div class="form-group">
+			<label for="email">Email</label>
+			<input type="email" name="email" required placeholder="This field needs to be completed"id="email" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="device">Device being used</label>
+			<input type="device" name="device" required placeholder="Which device and OS are you using?" id="Interest" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="interest">Your Interest in Golang or Web Development</label>
+			<input type="interest" name="interest" required placeholder="What is your interest/involvement with Golang, or Web development?" id="Interest" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="feedback">Feedback on this website</label>
+			<input type="feedback" name="feedback" required placeholder="Please include any feedback on the functioning, or appearence of this site that might improve it"  id="feedback" class="form-control">
+		</div>
+    <input type="submit" value="Feedback" class="btn btn-primary">
+</form>
+  <p>Feedback page for visiting non-members</p>
+{{ end }}

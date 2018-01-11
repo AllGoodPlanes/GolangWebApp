@@ -25,6 +25,7 @@ func main() {
 	fmt.Println("Listening...")
 	mux.HandleFunc("/", makeGzipHandler(Home))
 	mux.HandleFunc("/about/", makeGzipHandler(About))
+	mux.HandleFunc("/feedback/", makeGzipHandler(VisitorFbck))
 	mux.HandleFunc("/signedin/",Signedin)
 	loggedin := makeGzipHandler(http.HandlerFunc(Signedin))
 	mux.Handle("/signin/", Signin(loggedin))
