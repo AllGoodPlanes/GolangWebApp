@@ -97,6 +97,22 @@ func About(w http.ResponseWriter, req *http.Request) {
 }
 
 func render(w http.ResponseWriter, tmpl string, img string, context Context) {
+	if img == ""{
+	context.Static = STATIC_URL
+	tmpl_list := []string{"templates/base.html",
+		fmt.Sprintf("templates/%s.html", tmpl),
+	}
+	t, err := template.ParseFiles(tmpl_list...)
+	if err != nil {
+		log.Print("template parsing error: ", err)
+	}
+	//err = t.Execute(w, context )
+	err= t.ExecuteTemplate(w, "base", context)
+	if err != nil {
+		log.Print("template executing error: ", err)
+	}
+}else{
+
 	context.Static = STATIC_URL
 	tmpl_list := []string{"templates/base.html",
 		fmt.Sprintf("templates/%s.html", tmpl),
@@ -110,7 +126,8 @@ func render(w http.ResponseWriter, tmpl string, img string, context Context) {
 	err= t.ExecuteTemplate(w, "base", context)
 	if err != nil {
 		log.Print("template executing error: ", err)
-	}
+}}
+
 }
 
 
