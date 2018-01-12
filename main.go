@@ -42,6 +42,8 @@ func main() {
 	mux.HandleFunc("/verify/", makeGzipHandler(Verify))
 	fs:= http.FileServer(http.Dir("static"))
 	mux.Handle("/static/",http.StripPrefix("/static/", fs))
+	img:= http.FileServer(http.Dir("images"))
+	mux.Handle("/images/",http.StripPrefix("/images", img))
 	http.ListenAndServe(GetPort(), mux)
 
 
