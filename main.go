@@ -85,7 +85,7 @@ func makeGzipHandler(fn http.HandlerFunc) http.HandlerFunc {
 func Home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Welcome!"}
-	render(w, "home", "Gopher", context)
+	render(w, "home", "gopher", context)
 }
 
 func About(w http.ResponseWriter, req *http.Request) {
