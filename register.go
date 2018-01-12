@@ -56,7 +56,7 @@ func Register(w http.ResponseWriter, req *http.Request) {
 	context := Context{Title: "Register new member"}
 	fmt.Println("method:", req.Method) //get request method
 	if req.Method == "GET" {
-		render(w, "register", context)
+		render(w, "register", "", context)
 	} else {
 		req.ParseForm()
 		// logic part of log in

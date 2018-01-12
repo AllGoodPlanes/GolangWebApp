@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-//	"time"
 	"compress/gzip"
 	"strings"
 )
@@ -43,7 +42,10 @@ func main() {
 	mux.HandleFunc("/verify/", makeGzipHandler(Verify))
 	fs:= http.FileServer(http.Dir("static"))
 	mux.Handle("/static/",http.StripPrefix("/static/", fs))
+//	img:= http.FileServer(http.Dir("images"))
+//	mux.Handle("/image/",http.StripPrefix("/images", img))
 	http.ListenAndServe(GetPort(), mux)
+
 
 }
 
@@ -85,19 +87,21 @@ func makeGzipHandler(fn http.HandlerFunc) http.HandlerFunc {
 func Home(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "Welcome!"}
-	render(w, "home", context)
+	render(w, "home", "Gopher", context)
 }
 
 func About(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "About us"}
-	render(w, "about",  context)
+	render(w, "about", "", context)
 }
 
-func render(w http.ResponseWriter, tmpl string, context Context) {
+func render(w http.ResponseWriter, tmpl string, img string, context Context) {
 	context.Static = STATIC_URL
 	tmpl_list := []string{"templates/base.html",
-		fmt.Sprintf("templates/%s.html", tmpl)}
+		fmt.Sprintf("templates/%s.html", tmpl),
+		fmt.Sprintf("images/%s.png", img),
+	}
 	t, err := template.ParseFiles(tmpl_list...)
 	if err != nil {
 		log.Print("template parsing error: ", err)

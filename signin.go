@@ -122,7 +122,7 @@ func Signedin(w http.ResponseWriter, req *http.Request) {
 func Signout(w http.ResponseWriter, req *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
 	context := Context{Title: "You've logged out successfully"}
-	render(w, "signout", context)
+	render(w, "signout", "", context)
 
 	cookie, err := req.Cookie("GoWebAppCookie")
 	if err != nil {
@@ -150,7 +150,7 @@ func Signin(next http.Handler) http.Handler {
 		context := Context{Title: "Member Sign In"}
 		fmt.Println("method:", req.Method)
 		if req.Method == "GET" {
-			render(w, "signin", context)
+			render(w, "signin", "", context)
 		} else {
 			req.ParseForm()
 			username := req.PostFormValue("username")

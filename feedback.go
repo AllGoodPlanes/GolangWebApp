@@ -21,7 +21,7 @@ func VisitorFbck(w http.ResponseWriter, req *http.Request){
 	context := Context{Title: "Visitor Feedback"}
 	fmt.Println("method:", req.Method)
 	if req.Method == "GET"{
-	render (w, "feedback", context)
+	render (w, "feedback", "", context)
 } else {
 	req.ParseForm()
 

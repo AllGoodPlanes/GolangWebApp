@@ -4,6 +4,17 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.footer {
+   position: fixed;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: red;
+   color: white;
+   text-align: center;
+}
+</style>
     <title>Golang WebApp</title>
 <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css">
     <script type="text/javascript" src="/static/js/jquery-1.12.1.min.js"></script>
@@ -38,6 +49,9 @@
     <div class="container">
       {{ template "content" . }}
     </div>
-  </body>
+      </body>
+<div class="footer">
+  <p><a href="https://github.com/golang/go">GO Gopher logo created by Renee French, Licenced under Commons 3.0 Attributions Licence. </a></p>
+</div>
 </html>
 {{end}}
