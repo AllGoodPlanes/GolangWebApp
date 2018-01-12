@@ -42,8 +42,6 @@ func main() {
 	mux.HandleFunc("/verify/", makeGzipHandler(Verify))
 	fs:= http.FileServer(http.Dir("static"))
 	mux.Handle("/static/",http.StripPrefix("/static/", fs))
-//	img:= http.FileServer(http.Dir("images"))
-//	mux.Handle("/image/",http.StripPrefix("/images", img))
 	http.ListenAndServe(GetPort(), mux)
 
 
@@ -106,7 +104,6 @@ func render(w http.ResponseWriter, tmpl string, img string, context Context) {
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
-	//err = t.Execute(w, context )
 	err= t.ExecuteTemplate(w, "base", context)
 	if err != nil {
 		log.Print("template executing error: ", err)
@@ -122,7 +119,6 @@ func render(w http.ResponseWriter, tmpl string, img string, context Context) {
 	if err != nil {
 		log.Print("template parsing error: ", err)
 	}
-	//err = t.Execute(w, context )
 	err= t.ExecuteTemplate(w, "base", context)
 	if err != nil {
 		log.Print("template executing error: ", err)
