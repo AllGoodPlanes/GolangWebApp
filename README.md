@@ -32,6 +32,6 @@ Member suggestion page with ratings
 Upgrade to paid Heroku service to include SSL on email messaging
 Outlook365 tls cert
 Write tests
-Dockerize
+Dockerize.
 
 Current state can be seen on: gocloudcoding.com redirected to  https://golangwebapp.herokuapp.com
